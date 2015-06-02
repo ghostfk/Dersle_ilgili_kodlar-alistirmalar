@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+typedef struct list{
+	char a;
+	struct list *p;
+}list;
+
+list *st=NULL;
+
+void ekle(char i,list** q);
+void gor(list** q);
+void yaz(list** q);
+int menu();
+
+
+main(){
+
+int a;
+char i;
+
+while(1)
+	{
+		
+		a=menu();
+		
+		switch(a)
+		{
+		case 1:
+			printf("KARAKTER GIR:  ");
+			scanf("%s",&i);	
+			ekle(i,&st);
+			break;
+		case 2:
+			gor(&st);
+			break;
+		case 3:
+			yaz(&st);
+			break;
+		case 4:
+			exit(1);
+		default: break;
+		}
+	}
+}
+
+int menu()
+{
+		int i;
+		printf("\n1--ELEMAN EKLE\n");
+		printf("2--GORUNTULE\n");
+		printf("3--DOSYAYA YAZ\n");
+		printf("4--CIK\n");
+		scanf("%d",&i);
+		return i;
+};
+
+
+
+
+void ekle(char i,list** q)
+{
+if(!(*q)) { *q=new list; (*q)->a=i; (*q)->p=NULL; }
+else ekle(i,&(*q)->p);
+return;
+};
+
+
+void gor(list** q)
+{
+if(*q) { printf("\n-%c",(*q)->a); gor(&(*q)->p);  }
+else return;
+};
+
+
+void yaz(list** q)
+{
+FILE *f;
+f = fopen( "bagli dos.txt" , "w");
+while(*q)
+ {
+ fprintf(f,"%c\n",(*q)->a);
+ *q=(*q)->p;
+ }
+fclose(f);
+};
+
+
+
