@@ -29,7 +29,7 @@ while(1)
 		{
 		case 1:
 			printf("KARAKTER GIR:  ");
-			scanf("%s",&i);	
+			scanf("%s",&i);	    //burda %c yerine %s kullanınca üst üste scanf kullanırken enterın yaptığı ipnelik çözülmüş oluyor :D
 			ekle(i,&st);
 			break;
 		case 2:
