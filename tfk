@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<conio.h>
+#include<stdlib.h>
+typedef struct bagli_liste{//bilgilerimizin tutulacağı bağlı listemiz.
+	int sicil;
+	char ad[15],soyad[15];
+	struct bagli_liste *n;
+}lst;
+lst *p,*ilk=NULL,*son=NULL,*r,*g;
+void ekle(int x){//veri ekleme fonksiyonumuz.
+	if(ilk==NULL){//ilk girdinin yapılacağı yer.
+		ilk->sicil=x;
+		
+		printf("isim\n");
+		fflush(stdin);
+		gets(ilk->ad);
+		printf("soyisim\n");
+		gets(ilk->soyad);
+		ilk->n=NULL;
+		son=ilk;
+	}
+	else{//ilk olmayan girdinin yapılacağı yer.
+	r=new lst;
+	r->sicil=x;
+		printf("isim\n");
+		fflush(stdin);
+		gets(r->ad);
+		printf("soyisim\n");
+		gets(r->soyad);
+	r->n=NULL;
+	if((ilk->sicil)>(r->sicil)){//girdilerin kontrol edilip sırasıyla yerleştirileceği yer
+		r->n=ilk;
+		ilk=r;
+	}
+	else{//girdilerin kontrol edilip sırasıyla yerleştirileceği yer
+		for(p=ilk;p->n!=NULL && (p->n->sicil)<(r->sicil);p=p->n);
+		if(p->n==NULL){
+			p->n=r;
+			son=r;
+		}
+		else{
+			r->n=p->n;
+			p->n=r;}
+		}
+	}
+}
+void listele(){//verilerin listeleneceği yer.
+	printf("\t Listedeki elemanlar");
+	for(p=ilk;p!=son;p=p->n){
+		printf("\n\t->%d",p->sicil);
+		printf("\t %s",p->ad);
+		printf("\t %s\n",p->soyad);
+	}
+	getch();
+}
+void sil(int x){//verilerin silinebileceği yer.
+	g=ilk;
+	for(int i=0;i<x;i++){
+	g=g->n;
+	}
+	if(ilk->n->sicil==g->sicil){
+		ilk=ilk->n;
+	}
+	else{
+		for(p=ilk;p->n!=son;p=p->n){
+			if((p->n->n->sicil)==g->sicil){
+				r=new lst;
+				r=p->n;
+				p->n=r->n;
+				delete r;
+				break;
+			}
+		}
+	}
+}
+main(){
+	int a,b,c=0; char ad[15],soyad[15];
+	p=ilk=son=new lst;
+	while(1){//menümüz
+		printf("\n1-Yeni Kisi Ekle\n2-Kisileri Listele\n3-Kisi Sil\n   Secim yapiniz :");
+		scanf("%d",&a);
+		if(a==1){//ekleme yapılmak istendiğinde buraya girilecek.
+			printf("\nSicil numarasini giriniz :");
+			scanf("%d",&b);
+			c++;
+			ekle(b);
+		}
+		else if(a==2){//listeleme yapılmak istendiğinde buraya girilecek.
+			listele();
+		}
+		else if(a==3){//silme yapılmak istendiğinde buraya girilecek.
+			printf("\n\tSilinecek sayiyi giriniz :");
+			scanf("%d",&b);
+			sil(b);
+		}
+		else{//menüdekiler dışında bir girdi yapıldığında uyaracak kod.
+		printf("\tDogru secim yapiniz!");
+		getch();}
+	}
+}
