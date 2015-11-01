@@ -42,16 +42,20 @@ typedef struct linked {
 	}
 	
 	void ekle(Blist *take){
+		Blist *temp;
+		temp=new struct linked;
 		int d;
 		if(take==NULL){
 			printf("sicil numarasini giriniz.\n");
 			scanf("%d",&d);
-			take->no=d;
+			temp->no=d;
 			fflush(stdin);
 			printf("isim giriniz.\n");
-			gets(take->ad);
+			gets(temp->ad);
 			printf("soyisim giriniz.\n");
-			gets(take->soyad);
+			gets(temp->soyad);
+			temp->next=NULL;
+			take=temp;
 		}
 		else {
 			ekle(take->next);
